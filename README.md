@@ -21,31 +21,7 @@ For setup instructions and running the project, see [Setup Instructions](docs/se
 - [FAQ](docs/faq.md)
 - [Deployment Instructions](docs/deployment.md)
 - [System Architecture](docs/architecture.md)
+- [Changelog](docs/changelog.md)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
-
-#### 2.2 `LICENSE`
-Wähle eine geeignete Lizenz (z.B. MIT, Apache 2.0) und kopiere den Lizenztext. Für die MIT-Lizenz könnte der Inhalt so aussehen:
-
-```markdown
-MIT License
-
-Copyright (c) 2024 [Your Name]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software...
-```
-
-#### 2.3 `.gitignore`
-Für ein typisches Node.js und Docker-Projekt:
-
-```
-node_modules/
-dist/
-.env
-.DS_Store
-Dockerfile
-docker-compose.yml
-*.log
-```

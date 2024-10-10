@@ -1,3 +1,4 @@
+
 # API Documentation
 
 ## Base URL
@@ -36,4 +37,9 @@ Creates a new inventory item.
     }
   }
   ```
-```
+
+#### Error Handling
+- Standard HTTP status codes are used for indicating the result of operations.
+- 400 for bad requests, 401 for unauthorized access, 500 for server errors.
+
+[Back to Overview](overview.md)
