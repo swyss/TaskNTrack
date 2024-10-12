@@ -16,6 +16,13 @@ Individuals seeking a combined solution for task management and object tracking.
 - **Inventory Module**: Record objects with detailed descriptions, categories, and inventory numbers, track the location and condition of objects, and provide export and import functionalities for easy data backup.
 
 ## 2. Functional Requirements
+### 2.1 ToDo Module
+- **Task Management**: Users can create, edit, delete, and prioritize tasks. Tasks can be set with deadlines and reminders.
+- **Recurring Tasks**: Option to create recurring tasks with customizable intervals (e.g., daily, weekly).
+- **Task Assignment**: Users can assign tasks to different user roles or groups.
+- **Progress Tracking**: Tasks include status indicators (e.g., To Do, In Progress, Completed).
+- **Notification System**: Users receive notifications for approaching deadlines or updates to assigned tasks.
+
 ### 2.2 Inventory Module
 - **Object Management**: Users can add new objects, edit existing ones, and provide information such as name, description, category, and inventory number.
 - **Image Integration**: Users can upload an image for each object for visual identification, supporting common image formats (e.g., JPEG, PNG).
@@ -33,8 +40,8 @@ Individuals seeking a combined solution for task management and object tracking.
 
 ### 3.2 Security
 - **Data Privacy**: The application must comply with data protection regulations (e.g., GDPR), storing only necessary data locally.
-- **Encryption**: Sensitive information like user data should be stored encrypted.
-- **Authentication and Authorization**: Access to user data is controlled by a secure login system with password hashing (e.g., Bcrypt).
+- **Encryption**: Sensitive information like user data should be stored encrypted using AES-256.
+- **Authentication and Authorization**: Access to user data is controlled by a secure login system with password hashing (e.g., bcrypt). Role-based access control (RBAC) ensures that users can only access authorized data.
 
 ### 3.3 Availability
 - **Uptime**: The application should maintain 99.5% uptime, ensuring constant availability for users.
@@ -66,39 +73,49 @@ Individuals seeking a combined solution for task management and object tracking.
 
 ### 4.2 Technologies
 - **Frontend**:
-  - **Framework**: Vue.js (with Vuetify for UI components).
-  - **Electron**: Main client for Windows desktops with administrative functions.
-  - **Android**: Using Vue Native or an Android wrapper solution for the mobile app.
-  - **IndexedDB**: For local data storage and caching on end devices for better performance and offline access.
+  - **Framework**: Vue.js (with Vuetify for UI components) for building a responsive and user-friendly interface.
+  - **Electron**: Serves as the primary client for Windows desktops, providing access to administrative functions and offering a seamless experience on larger screens.
+  - **Android**: Uses a wrapper solution (e.g., Capacitor or Vue Native) to run the Vue.js application on Android devices for mobile access to tasks and inventory.
+  - **IndexedDB**: Utilized for local storage and caching of data on client devices, enhancing performance and supporting offline capabilities.
+
 - **Backend**:
-  - **Programming Language**: Java (Spring Boot) or .NET (ASP.NET Core).
+  - **Programming Language**: JavaScript (Node.js) for server-side logic.
+  - **Framework**: Express.js for creating a RESTful API that communicates with the frontend clients and handles requests.
   - **Storage Technologies**:
     - **NoSQL Database**: MongoDB for flexible, schema-less storage of inventory and task data.
-    - **SQL Database**: PostgreSQL for relational data and complex queries.
-  - **API**: RESTful API for communication between the backend and frontend, supporting all data queries and manipulations.
-  - **Deployment**: The backend server is hosted on a local network server, requiring no internet connection.
+    - **SQL Database**: PostgreSQL for relational data storage, handling structured data and complex queries (e.g., user management, roles, and permissions).
+  - **API**: RESTful API built with Express.js for managing CRUD operations.
+  - **Deployment**:
+    - **Docker**: Containerizes the backend, MongoDB, and PostgreSQL, simplifying deployment on various platforms, including Raspberry Pi.
+    - **Docker Compose**: Manages multi-container setup, ensuring that the backend and databases start together and remain connected.
+    - **Raspberry Pi**: Hosts the backend in a local environment without needing cloud services.
+
+- **Integrations**:
+  - **File Upload**: Supports image uploads for inventory objects through REST endpoints.
+  - **Data Import/Export**: CSV support for data export and import.
+  - **Authentication**: JWT for user sessions and bcrypt for password hashing.
 
 ### 4.3 Integrations and Interfaces
-- **File Upload**: Support for uploading images (e.g., JPEG/PNG) for inventory objects, stored centrally on the server.
-- **Export and Import**: CSV support for exporting and importing inventory and task data, managed through the Electron app.
+- **File Upload**: Support for uploading images (e.g., JPEG/PNG) for inventory objects.
+- **Export and Import**: CSV support for inventory and task data.
 - **Platform Compatibility**:
   - **Frontend**: Support for Windows and Android.
-  - **Backend**: Can run on a Linux-based server for a stable and cost-effective solution.
+  - **Backend**: Compatible with Linux environments, optimized for Raspberry Pi.
 
-## 5. User Interface (UI/UX) Requirements
-### 5.1 Design Requirements
+### 5. User Interface (UI/UX) Requirements
+#### 5.1 Design Requirements
 - **Clear and Minimalist Design**: The UI should be simple and intuitive, allowing users to navigate quickly.
 - **Responsive Design**: The UI should adapt to different screen sizes and devices (desktop, tablet, smartphone).
 - **Color Scheme**: A modern, friendly color scheme with accent colors for important elements (e.g., "Add" button, warnings).
 - **Dark Mode Support**: Option to switch between a light and dark mode.
 
-### 5.2 Navigation
+#### 5.2 Navigation
 - **Main Navigation**: Access to core modules (ToDo, Inventory, Dashboard) through a sidebar in the desktop version and a menu in the mobile version.
 - **Breadcrumbs**: Display the current position within the application for better orientation.
 - **Quick Access**: An "Add" button accessible from any page to quickly create tasks or inventory objects.
 - **Dashboard**: Provides an overview of upcoming tasks and recently added inventory objects.
 
-### 5.3 Views and Layouts
+#### 5.3 Views and Layouts
 - **Dashboard**:
   - Overview of all open tasks and inventory.
   - Display filters (e.g., tasks by priority, inventory by category).
@@ -111,12 +128,12 @@ Individuals seeking a combined solution for task management and object tracking.
   - Detail view for each object, including image, description, location, condition, and ratings.
   - Ratings summary showing individual criteria and overall rating.
 
-### 5.4 Interaction Design
+#### 5.4 Interaction Design
 - **Drag-and-Drop**: Support for drag-and-drop, e.g., for reordering tasks within lists.
 - **Context Menus**: Right-click context menus for quick actions (e.g., edit, delete) for tasks and inventory objects.
 - **Confirmation Messages**: Safety prompts before deleting important data, e.g., "Are you sure you want to delete this task?"
 
-### 5.5 Accessibility
+#### 5.5 Accessibility
 - **Keyboard Navigation**: The application should be fully navigable using a keyboard.
 - **Screen Reader Support**: All key functions and content should be optimized for screen readers.
 - **Contrast Adjustments**: Ability to adjust the interface contrast for better readability for users with visual impairments.
@@ -135,9 +152,7 @@ Individuals seeking a combined solution for task management and object tracking.
 
 ### 6.2 Acceptance Criteria
 - **Functional Completeness**: All features described in the functional requirements are implemented and tested.
-- **Performance Requirements**: The application meets the response times and load times outlined in the non-functional
-
- requirements.
+- **Performance Requirements**: The application meets the response times and load times outlined in the non-functional requirements.
 - **Offline Functionality**: Ensured that all data is accessible without an internet connection.
 
 ### 6.3 Testing Scenarios
@@ -229,7 +244,9 @@ Individuals seeking a combined solution for task management and object tracking.
 - **Maintenance**:
   - Regular checks for security updates for backend and frontend components.
   - Planning and documentation of maintenance intervals for the Raspberry Pi server (e.g., checking Docker containers, database backups).
-  - Maintenance logs and release documentation are also stored as `.md` files in the `docs/` directory.
+  - Maintenance logs and release documentation are also stored
+
+ as `.md` files in the `docs/` directory.
 - **Release Management**:
   - Version numbering and changelogs for each released version of the application.
   - **changelog.md**: Provides details about new features, bug fixes, and known issues, located in the `docs/` directory.

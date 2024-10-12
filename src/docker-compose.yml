@@ -1,0 +1,61 @@
+services:
+  backend:
+    build: ./backend
+    container_name: taskntrack-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    depends_on:
+      - mongodb
+      - postgres
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+      - taskntrack-network
+
+  frontend:
+    build: ./frontend
+    container_name: taskntrack-frontend
+    ports:
+      - "8080:8080"
+    environment:
+      - VUE_APP_API_URL=http://localhost:5000
+    networks:
+      - taskntrack-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: taskntrack-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - taskntrack-network
+
+  postgres:
+    image: postgres:latest
+    container_name: taskntrack-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=taskntrack
+      - POSTGRES_USER=taskntrack_user
+      - POSTGRES_PASSWORD=securepassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - taskntrack-network
+
+volumes:
+  mongodb_data:
+  postgres_data:
+
+networks:
+  taskntrack-network:
+    driver: bridge
